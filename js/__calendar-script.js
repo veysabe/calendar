@@ -44,7 +44,7 @@ function createCalendar() {
 	table += '</tr></table>';
 
 	content = "<h1>" + monthName + "</h1>" + table;
-	calendar.innerHTML = content;
+	calendar__current.innerHTML = content;
 };
 
 $(document).mouseup(function (e){ 
@@ -61,7 +61,6 @@ $(".pickMonthButton").click(function(){
 	$(".calendar-out").css("display", "flex");
 	createCalendar();
 });
-
 
 function getDay(date) { 
 	let day = date.getDay();
