@@ -52,13 +52,17 @@ $(document).mouseup(function (e){
 	let calendarOut = $(".calendar-out");
 	if (!calendar.is(e.target) // если клик был не по нашему блоку
 	    && calendar.has(e.target).length === 0) { // и не по его дочерним элементам
-		calendarOut.css("display", "none");
+			calendarOut.removeClass("shown");
+			calendarOut.removeAttr("style");
 	}
 });
 
 
 $(".pickMonthButton").click(function(){
 	$(".calendar-out").css("display", "flex");
+	setTimeout(function(){
+		$(".calendar-out").addClass("shown");
+	},100);
 	createCalendar();
 });
 
