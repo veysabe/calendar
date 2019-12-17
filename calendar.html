@@ -1,16 +1,27 @@
-<link rel="stylesheet" href="css/__calendar-block.css">
-<meta charset="utf-8">
-
-<input type="button" class="pickMonthButton" value="Выбрать дату">
-
-<div class="calendar-out">
-	<div class="calendar-cont">
-		<div class="calendar-slider">
-			<div id="calendar__current"></div>
-			<div id="calendar__next"></div>
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="css/__calendar-block.css">
+	<link rel="stylesheet" type="text/css" href="slick/slick.css"/>
+	<link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+	<input type="button" class="pickMonthButton" value="Выбрать дату">
+	<div class="calendar-out">
+		<div class="calendar-cont">
+			<div class="calendar-slider">
+				<div><div id="calendar__current"></div></div>
+				<div></div><div id="calendar__next"></div></div>
+			</div>
 		</div>
 	</div>
-</div>
 
-<script src="js/jquery-3.4.1.min.js"></script>
-<script src="js/__calendar-script.js"></script>
+	
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="slick/slick.min.js"></script>
+	<script src="js/__calendar-script.js"></script>
+
+</body>
+</html>

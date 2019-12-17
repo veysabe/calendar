@@ -1,7 +1,3 @@
-$(document).ready(function(){
-	$(".calendar-slider").slick();
-})
-
 function createCalendar() {
 	let curDate = new Date();
 	let mon = curDate.getMonth();
@@ -48,34 +44,13 @@ function createCalendar() {
 	table += '</tr></table>';
 
 	content = "<h1>" + monthName + "</h1>" + table;
-	$('#calendar__current').html(content)
-	// calendar__current.innerHTML = content;
-
-	$(".calendar-slider").slick('refresh');
-
+	calendar.innerHTML = content;
 };
-
-$(document).mouseup(function (e){ 
-	let calendar = $(".calendar-cont"); 
-	let calendarOut = $(".calendar-out");
-	if (!calendar.is(e.target) // если клик был не по нашему блоку
-	    && calendar.has(e.target).length === 0) { // и не по его дочерним элементам
-			calendarOut.removeClass("shown");
-			calendarOut.removeAttr("style");
-	}
-});
-
-
-$(".pickMonthButton").click(function(){
-	$(".calendar-out").css("display", "flex");
-	setTimeout(function(){
-		$(".calendar-out").addClass("shown");
-	},100);
-	createCalendar();
-});
 
 function getDay(date) { 
 	let day = date.getDay();
 	if (day == 0) day = 7; 
 	return day - 1;
 };
+
+createCalendar();
