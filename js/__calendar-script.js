@@ -1,11 +1,13 @@
 $(document).ready(function(){
-	$(".calendar-slider").slick();
+	$(".calendar-slider").slick({
+		infinite: false
+	});
 })
 
-function createCalendar() {
-	let curDate = new Date();
-	let mon = curDate.getMonth();
-	let year = curDate.getFullYear();
+let curDate = new Date();
+
+function createCalendar(elem, year, month) {
+	let mon = month - 1;
 	let d = new Date(year, mon);
 	let table = '<table><tr><th>пн</th><th>вт</th><th>ср</th><th>чт</th><th>пт</th><th>сб</th><th>вс</th></tr><tr>';
 
@@ -29,8 +31,8 @@ function createCalendar() {
 		}
 	}
 
-	let month = mon + 1;
-
+	// закрыть таблицу
+	table += '</tr></table>';
 	if (month == 1) monthName = "Январь";
 	if (month == 2) monthName = "Февраль";
 	if (month == 3) monthName = "Март";
@@ -44,12 +46,8 @@ function createCalendar() {
 	if (month == 11) monthName = "Ноябрь";
 	if (month == 12) monthName = "Декабрь";
 
-	// закрыть таблицу
-	table += '</tr></table>';
-
 	content = "<h1>" + monthName + "</h1>" + table;
-	$('#calendar__current').html(content)
-	// calendar__current.innerHTML = content;
+	elem.innerHTML = content;
 
 	$(".calendar-slider").slick('refresh');
 
@@ -71,7 +69,9 @@ $(".pickMonthButton").click(function(){
 	setTimeout(function(){
 		$(".calendar-out").addClass("shown");
 	},100);
-	createCalendar();
+	let year = curDate.getFullYear();
+	let month = curDate.getMonth();
+	createCalendar(calendar__current, year, month);
 });
 
 function getDay(date) { 
