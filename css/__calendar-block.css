@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 
-#calendar__current h1 {
+#calendar__current h1, #calendar__next h1 {
 	font-family: Montserrat;
 }
 
@@ -121,6 +121,21 @@ td:nth-child(6), td:nth-child(7), th:nth-child(6), th:nth-child(7) {
 	color: white;
 	font-family: Montserrat;
 	background: #EF7F1A;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.pickWeekendButton {
+	width: 150px;
+	height: 30px;
+	border-radius: 5px;
+	margin-top: 10px;
+	text-align: center;
+	outline: 0;
+	border: none;
+	color: white;
+	font-family: Montserrat;
+	background: green;
 	font-weight: bold;
 	cursor: pointer;
 }

@@ -64,18 +64,26 @@ $(document).mouseup(function (e){
 });
 
 
-$(".pickMonthButton").click(function(){
-	$(".calendar-out").css("display", "flex");
-	setTimeout(function(){
-		$(".calendar-out").addClass("shown");
-	},100);
-	let year = curDate.getFullYear();
-	let month = curDate.getMonth();
-	createCalendar(calendar__current, year, month);
-});
-
 function getDay(date) { 
 	let day = date.getDay();
 	if (day == 0) day = 7; 
 	return day - 1;
 };
+
+$(".pickMonthButton").click(function(){
+	$(".calendar-out").css("display", "flex");
+	setTimeout(function(){
+		$(".calendar-out").addClass("shown");
+	},100);
+	let curYear = curDate.getFullYear();
+	let curMonth = curDate.getMonth() + 1;
+	if (curMonth = 12) {
+		nextMonth = 1;
+		nextYear = curYear + 1;
+	} else {
+		nextMonth = curMonth + 1;
+		nextYear = curYear;
+	}
+	createCalendar(calendar__current, curYear, curMonth);
+	createCalendar(calendar__next, nextYear, nextMonth);
+});
