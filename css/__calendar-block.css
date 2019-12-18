@@ -32,6 +32,20 @@
 	position: relative;
 }
 
+.calendar-cont {
+	width: 80%;
+	height: 80%;
+	background-color: white;
+	margin: 0px auto;
+	padding: 20px;
+	border-radius: 5px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+}
+
 .shown {
 	display: flex;
 	opacity: 1;

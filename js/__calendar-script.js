@@ -6,7 +6,7 @@ $(document).ready(function(){
 
 let curDate = new Date();
 
-function createCalendar(elem, year, month) {
+function createCalendar(elem, year, month, user) {
 	let mon = month - 1;
 	let d = new Date(year, mon);
 	let table = '<table><tr><th>пн</th><th>вт</th><th>ср</th><th>чт</th><th>пт</th><th>сб</th><th>вс</th></tr><tr>';
@@ -18,7 +18,7 @@ function createCalendar(elem, year, month) {
 
 	// ячейки с датами
 	while (d.getMonth() == mon) {
-		table += '<td class="dateCell">' + d.getDate() + '</td>';
+		table += '<td class="dateCell ' + user + '">' + d.getDate() + '</td>';
 		if (getDay(d) % 7 == 6) { // 
 			table += '</tr><tr>';
 		}
@@ -60,6 +60,7 @@ $(document).mouseup(function (e){
 	    && calendar.has(e.target).length === 0) { // и не по его дочерним элементам
 			calendarOut.removeClass("shown");
 			calendarOut.removeAttr("style");
+			$(".calendar-cont").removeClass("admin user");
 	}
 });
 
@@ -72,6 +73,7 @@ function getDay(date) {
 
 $(".pickMonthButton").click(function(){
 	$(".calendar-out").css("display", "flex");
+	$(".calendar-cont").addClass("user");
 	setTimeout(function(){
 		$(".calendar-out").addClass("shown");
 	},100);
@@ -84,6 +86,25 @@ $(".pickMonthButton").click(function(){
 		nextMonth = curMonth + 1;
 		nextYear = curYear;
 	}
-	createCalendar(calendar__current, curYear, curMonth);
-	createCalendar(calendar__next, nextYear, nextMonth);
+	createCalendar(calendar__current, curYear, curMonth, "user");
+	createCalendar(calendar__next, nextYear, nextMonth, "user");
+});
+
+$(".pickWeekendButton").click(function(){
+	$(".calendar-out").css("display", "flex");
+	$(".calendar-cont").addClass("admin");
+	setTimeout(function(){
+		$(".calendar-out").addClass("shown");
+	},100);
+	let curYear = curDate.getFullYear();
+	let curMonth = curDate.getMonth() + 1;
+	if (curMonth = 12) {
+		nextMonth = 1;
+		nextYear = curYear + 1;
+	} else {
+		nextMonth = curMonth + 1;
+		nextYear = curYear;
+	}
+	createCalendar(calendar__current, curYear, curMonth, "admin");
+	createCalendar(calendar__next, nextYear, nextMonth, "admin");
 });
