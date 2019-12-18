@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$(".calendar-slider").slick({
+	$(".calendar-user-slider").slick({
 		infinite: false
 	});
 })
@@ -19,7 +19,7 @@ function createCalendar(elem, year, month) {
 	// ячейки с датами
 	while (d.getMonth() == mon) {
 		table += '<td class="dateCell">' + d.getDate() + '</td>';
-		if (getDay(d) % 7 == 6) { // 
+		if (getDay(d) % 7 == 6) {
 			table += '</tr><tr>';
 		}
 		d.setDate(d.getDate() + 1);
@@ -49,13 +49,13 @@ function createCalendar(elem, year, month) {
 	content = "<h1>" + monthName + "</h1>" + table;
 	elem.innerHTML = content;
 
-	$(".calendar-slider").slick('refresh');
+	$(".calendar-user-slider").slick('refresh');
 
 };
 
 $(document).mouseup(function (e){ 
-	let calendar = $(".calendar-cont"); 
-	let calendarOut = $(".calendar-out");
+	let calendar = $(".calendar-user-cont"); 
+	let calendarOut = $(".calendar-user-out");
 	if (!calendar.is(e.target) // если клик был не по нашему блоку
 	    && calendar.has(e.target).length === 0) { // и не по его дочерним элементам
 			calendarOut.removeClass("shown");
@@ -71,9 +71,9 @@ function getDay(date) {
 };
 
 $(".pickMonthButton").click(function(){
-	$(".calendar-out").css("display", "flex");
+	$(".calendar-user-out").css("display", "flex");
 	setTimeout(function(){
-		$(".calendar-out").addClass("shown");
+		$(".calendar-user-out").addClass("shown");
 	},100);
 	let curYear = curDate.getFullYear();
 	let curMonth = curDate.getMonth() + 1;
@@ -84,6 +84,6 @@ $(".pickMonthButton").click(function(){
 		nextMonth = curMonth + 1;
 		nextYear = curYear;
 	}
-	createCalendar(calendar__current, curYear, curMonth);
-	createCalendar(calendar__next, nextYear, nextMonth);
+	createCalendar(calendarUser__current, curYear, curMonth);
+	createCalendar(calendarUser__next, nextYear, nextMonth);
 });

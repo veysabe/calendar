@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="css/__calendar-block.css">
+	<link rel="stylesheet" href="css/__calendar-user-block.css">
+	<link rel="stylesheet" href="css/__calendar-admin-block.css">
 	<link rel="stylesheet" type="text/css" href="slick/slick.css"/>
 	<link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
 	<meta charset="utf-8">
@@ -10,11 +11,20 @@
 <body>
 	<input type="button" class="pickMonthButton" value="Выбрать дату">
 	<input type="button" class="pickWeekendButton" value="Выбрать выходные">
-	<div class="calendar-out">
-		<div class="calendar-cont">
-			<div class="calendar-slider">
-				<div><div id="calendar__current"></div></div>
-				<div><div id="calendar__next"></div></div>
+	<div class="calendar-user-out">
+		<div class="calendar-user-cont">
+			<div class="calendar-user-slider">
+				<div><div id="calendarUser__current"></div></div>
+				<div><div id="calendarUser__next"></div></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="calendar-admin-out">
+		<div class="calendar-admin-cont">
+			<div class="calendar-admin-slider">
+				<div><div id="calendarAdmin__current"></div></div>
+				<div><div id="calendarAdmin__next"></div></div>
 			</div>
 		</div>
 	</div>
@@ -22,7 +32,7 @@
 
 	<script src="js/jquery-3.4.1.min.js"></script>
 	<script type="text/javascript" src="slick/slick.min.js"></script>
-	<script src="js/__calendar-script.js"></script>
+	<script src="js/__calendar-admin-script.js"></script>
 
 </body>
 </html>
