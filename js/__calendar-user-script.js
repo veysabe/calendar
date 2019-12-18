@@ -1,9 +1,7 @@
-$(document).ready(function(){
+(function () {
 	$(".calendar-user-slider").slick({
 		infinite: false
 	});
-})
-
 let curDate = new Date();
 
 function createCalendar(elem, year, month) {
@@ -87,3 +85,4 @@ $(".pickMonthButton").click(function(){
 	createCalendar(calendarUser__current, curYear, curMonth);
 	createCalendar(calendarUser__next, nextYear, nextMonth);
 });
+})();

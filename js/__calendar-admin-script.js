@@ -1,9 +1,7 @@
-$(document).ready(function(){
+(function () {
 	$(".calendar-admin-slider").slick({
 		infinite: false
 	});
-})
-
 let curDate = new Date();
 
 function createCalendar(elem, year, month) {
@@ -98,3 +96,4 @@ $("body").on('click', ".dateCellAdmin", function(){
 		console.log('net');
 	}
 });
+})();
