@@ -14,6 +14,8 @@ let curMonth;
 
 let month;
 
+let gap;
+
 function createCalendar(elem, year, month, user) { // функция создания календаря
 	let mon = month - 1;
 	let d = new Date(year, mon);
@@ -113,17 +115,59 @@ function getMonthName(month) {
 	}; 
 };
 
-$(document).mouseup(function (e){ // скрыть модальное окно календаря
-	let calendar = $(".calendar-cont"); 
-	let calendarOut = $(".calendar-out");
-	if (!calendar.is(e.target) // если клик был не по нашему блоку
-	    && calendar.has(e.target).length === 0) { // и не по его дочерним элементам
-			calendarOut.removeClass("shown");
-			calendarOut.removeAttr("style");
-			$(".calendar-cont").removeClass("admin user");
-			$(".pickWeekendButton-accept").remove();
-	}
-});
+$('body').on('click', '.choose-time__time-element', function() {
+
+})
+
+let openTime = 9;
+let closeTime = 22;
+
+function showTime(date) {
+	if ( gap == undefined ) { 
+		alert('net') 
+	} else {
+		$('.choose-time-out').css('display', 'flex');
+		setTimeout(function(){
+			$('.choose-time-out').addClass('show-time');
+		},100);
+		let i = openTime;
+		let dataDay = $(date).text();
+		let dataMonth = $(date).parents('.slick-slide').attr('data-month');
+		getMonthName(+dataMonth);
+		console.log(monthName);
+		$('.choose-time-slider').attr('data-month', dataMonth).attr('data-day', dataDay);
+		console.log(dataDay);
+		while ( i <= closeTime ) {
+			let divInner = `
+				<div class="choose-time__element-date">
+					<span class="choose-time__element-date-day">${dataDay}</span>
+					<span class="choose-time__element-date-month">${monthName}</span>
+				</div>
+				<span class="choose-time__element-time">${i}</span>
+			`;
+			let html = `<div class="choose-time__time-element" data-time="${i}">${divInner}</div>`;
+			$('.choose-time-container').append(html);
+			i += gap;
+		}
+	}	
+}
+
+function deactivatedDates() { // выделить неактивные даты
+	$(".slick-slide").each(function(index) {
+		let weekendMonthNum = $(this).attr('data-month');
+		for (let key in weekendObj) {
+			if ( weekendMonthNum == key ) {
+				for ( let inactiveDate of weekendObj[key] ) {
+					$(this).find(".dateCell").each(function(){
+						if ( $(this).text() == inactiveDate ) {
+							$(this).addClass('inactive');
+						} 
+					})
+				}
+			}
+		}
+	});
+}
 
 $(".pickMonthButton").click(function() { // создание календаря при нажатии на кнопку (user)
 	$(".calendar-out").css("display", "flex");
@@ -143,6 +187,15 @@ $(".pickMonthButton").click(function() { // создание календаря 
 	createCalendar(calendar__current, curYear, curMonth, "user");
 	createCalendar(calendar__next, nextYear, nextMonth, "user");
 });
+
+$('body').on('click', '.calendar-cont-close', function(){
+	let calendar = $(".calendar-cont"); 
+	let calendarOut = $(".calendar-out");
+	calendarOut.removeClass("shown");
+	calendarOut.removeAttr("style");
+	calendar.removeClass("admin user");
+	$(".pickWeekendButton-accept").remove();
+})
 
 let adminWeekendButton = '<input type="button" class="pickWeekendButton-accept" value="Выбрать выходные">';
 
@@ -166,7 +219,7 @@ $(".pickWeekendButton").click(function(){ // создание календаря
 	$(".calendar-cont").append(adminWeekendButton);
 });
 
-$("body").on('click', '.dateCell.admin', function() {
+$("body").on('click', '.dateCell.admin', function() { // добавить клеткам с датами классы
 	if ( $(this).hasClass('toggled') ) {
 		$(this).removeClass('toggled');
 	} else if ( $(this).hasClass('inactive') ) {
@@ -193,19 +246,46 @@ $("body").on('click', '.pickWeekendButton-accept', function(){ // Создани
 	console.log(weekendObj);
 });
 
-function deactivatedDates() {
-	$(".slick-slide").each(function(index) {
-		let weekendMonthNum = $(this).attr('data-month');
-		for (let key in weekendObj) {
-			if ( weekendMonthNum == key ) {
-				for ( let inactiveDate of weekendObj[key] ) {
-					$(this).find(".dateCell").each(function(){
-						if ( $(this).text() == inactiveDate ) {
-							$(this).addClass('inactive');
-						} 
-					})
-				}
-			}
-		}
-	});
-}
+$('body').on('click', '.dateCell.user', function(){ // открыть окно с выбором времени по нажатии на кнопку
+	if ( $(this).hasClass('inactive') ) {
+		alert('нет');
+	} else {
+		showTime(this);
+	}
+});
+
+$('body').on('click', '.pickGapButton', function(){ // открыть окно с интервалом
+	$(".gap-choise-out").css("display", "flex");
+	setTimeout(function(){
+		$(".gap-choise-out").addClass("shown");
+	},100);
+});
+
+$(document).mouseup(function (e){ // скрыть модальное окно интервала
+	let gapChoise = $(".gap-choise-cont"); 
+	let gapChoiseOut = $(".gap-choise-out");
+	if (!gapChoise.is(e.target) // если клик был не по нашему блоку
+	    && gapChoise.has(e.target).length === 0) { // и не по его дочерним элементам
+			gapChoiseOut.removeClass("shown");
+			gapChoiseOut.removeAttr("style");
+	}
+});
+
+$(document).mouseup(function (e){ // скрыть модальное окно выбора времени
+	let chooseTime = $(".choose-time-cont"); 
+	let chooseTimeOut = $(".choose-time-out");
+	if (!chooseTime.is(e.target) // если клик был не по нашему блоку
+	    && chooseTime.has(e.target).length === 0) { // и не по его дочерним элементам
+			chooseTimeOut.removeClass("show-time");
+			chooseTimeOut.removeAttr("style");
+			$('div.choose-time__time-element').remove();
+	}
+});
+
+$('body').on('click', '.gapChoiseButton', function() { // задать интервал
+	if ( $(this).attr('data') == '1hour' ) {
+		gap = 1;
+	} else if ( $(this).attr('data') == 'halfhour' ) {
+		gap = 0.5;
+	}
+});
