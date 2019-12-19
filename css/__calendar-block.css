@@ -173,3 +173,13 @@ td:nth-child(6), td:nth-child(7), th:nth-child(6), th:nth-child(7) {
 	font-weight: bold;
 	cursor: pointer;
 }
+
+.user .inactive {
+	background: rgba(0,0,0,0.2);
+	cursor: auto;
+
+}
+
+.admin .inactive {
+	background: green;
+}

@@ -14,61 +14,6 @@ let curMonth;
 
 let month;
 
-function getMonthName(month) {
-	switch (month) {
-	case 1:
-		monthName = 'Январь';
-		break;
-	case 2:
-		monthName = 'Февраль';
-		break;
-	case 3:
-		monthName = 'Март';
-		break;
-	case 4:
-		monthName = 'Апрель';
-		break;
-	case 5:
-		monthName = 'Май';
-		break;
-	case 6:
-		monthName = 'Июнь';
-		break;
-	case 7:
-		monthName = 'Июль';
-		break;
-	case 8:
-		monthName = 'Август';
-		break;
-	case 9:
-		monthName = 'Сентябрь';
-		break;
-	case 10:
-		monthName = 'Октябрь';
-		break;
-	case 11:
-		monthName = 'Ноябрь';
-		break;
-	case 12:
-		monthName = 'Декабрь';
-		break;
-	}; // функция присваивания имени месяца по его номеру
-};
-
-$("body").on('click', '.pickWeekendButton-accept', function(){ // Создание объекта с выходными при нажатии на кнопку
-	let weekendDays = [];
-	$(".slick-slide").each(function(index) {
-		let weekendMonthNum = ($(this).attr('data-month'));
-		$(this).find(".dateCell.toggled").each(function(){
-			weekendDays.push( $(this).text() );
-		})
-		getMonthName(+weekendMonthNum);
-		weekendObj[monthName] = weekendDays;
-		weekendDays = [];
-	});
-	console.log(weekendObj);
-});
-
 function createCalendar(elem, year, month, user) { // функция создания календаря
 	let mon = month - 1;
 	let d = new Date(year, mon);
@@ -117,6 +62,55 @@ function createCalendar(elem, year, month, user) { // функция созда�
 
 	$(".calendar-slider").slick('refresh');
 	$(elem).parent().attr('data-month', month);
+	deactivatedDates();
+};
+
+function getDay(date) { 
+	let day = date.getDay();
+	if (day == 0) day = 7; 
+	return day - 1;
+};
+
+// функция присваивания имени месяца по его номеру
+function getMonthName(month) {
+	switch (month) {
+	case 1:
+		monthName = 'Январь';
+		break;
+	case 2:
+		monthName = 'Февраль';
+		break;
+	case 3:
+		monthName = 'Март';
+		break;
+	case 4:
+		monthName = 'Апрель';
+		break;
+	case 5:
+		monthName = 'Май';
+		break;
+	case 6:
+		monthName = 'Июнь';
+		break;
+	case 7:
+		monthName = 'Июль';
+		break;
+	case 8:
+		monthName = 'Август';
+		break;
+	case 9:
+		monthName = 'Сентябрь';
+		break;
+	case 10:
+		monthName = 'Октябрь';
+		break;
+	case 11:
+		monthName = 'Ноябрь';
+		break;
+	case 12:
+		monthName = 'Декабрь';
+		break;
+	}; 
 };
 
 $(document).mouseup(function (e){ // скрыть модальное окно календаря
@@ -131,13 +125,6 @@ $(document).mouseup(function (e){ // скрыть модальное окно к
 	}
 });
 
-
-function getDay(date) { 
-	let day = date.getDay();
-	if (day == 0) day = 7; 
-	return day - 1;
-};
-
 $(".pickMonthButton").click(function() { // создание календаря при нажатии на кнопку (user)
 	$(".calendar-out").css("display", "flex");
 	$(".calendar-cont").addClass("user");
@@ -146,7 +133,6 @@ $(".pickMonthButton").click(function() { // создание календаря 
 	},100);
 	let curYear = curDate.getFullYear();
 	let curMonth = curDate.getMonth() + 1;
-	createCalendar(calendar__current, curYear, curMonth, "user");
 	if (curMonth = 12) {
 		nextMonth = 1;
 		nextYear = curYear + 1;
@@ -154,6 +140,7 @@ $(".pickMonthButton").click(function() { // создание календаря 
 		nextMonth = curMonth + 1;
 		nextYear = curYear;
 	}
+	createCalendar(calendar__current, curYear, curMonth, "user");
 	createCalendar(calendar__next, nextYear, nextMonth, "user");
 });
 
@@ -179,10 +166,45 @@ $(".pickWeekendButton").click(function(){ // создание календаря
 	$(".calendar-cont").append(adminWeekendButton);
 });
 
-$("body").on('click', '.dateCell.admin', function(){
+$("body").on('click', '.dateCell.admin', function() {
 	if ( $(this).hasClass('toggled') ) {
 		$(this).removeClass('toggled');
+	} else if ( $(this).hasClass('inactive') ) {
+		$(this).removeClass('inactive');
 	} else {
 		$(this).addClass('toggled');
 	}
 });
+
+$("body").on('click', '.pickWeekendButton-accept', function(){ // Создание объекта с выходными при нажатии на кнопку
+	let weekendDays = [];
+	$(".slick-slide").each(function(index) {
+		let weekendMonthNum = ($(this).attr('data-month'));
+		$(this).find(".dateCell.toggled").each(function(){
+			weekendDays.push( $(this).text() );
+		});
+		$(this).find(".dateCell.inactive").each(function(){
+			weekendDays.push( $(this).text() );
+		});
+		weekendObj[weekendMonthNum] = weekendDays;
+		weekendDays = [];
+	});
+	console.log(weekendObj);
+});
+
+function deactivatedDates() {
+	$(".slick-slide").each(function(index) {
+		let weekendMonthNum = $(this).attr('data-month');
+		for (let key in weekendObj) {
+			if ( weekendMonthNum == key ) {
+				for ( let inactiveDate of weekendObj[key] ) {
+					$(this).find(".dateCell").each(function(){
+						if ( $(this).text() == inactiveDate ) {
+							$(this).addClass('inactive');
+						} 
+					})
+				}
+			}
+		}
+	});
+}
