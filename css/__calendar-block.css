@@ -129,6 +129,33 @@
 	position: relative;
 }
 
+.worktime-choise-out {
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.5);
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	transition: 1s;
+	opacity: 0;
+}
+
+.worktime-choise-cont {
+	width: 40%;
+	height: 20%;
+	background-color: white;
+	margin: 0px auto;
+	padding: 20px;
+	border-radius: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+}
+
 .show-time {
 	display: flex;
 	opacity: 1;
@@ -265,6 +292,20 @@ td:nth-child(6), td:nth-child(7), th:nth-child(6), th:nth-child(7) {
 
 .pickGapButton {
 	width: 150px;
+	height: 30px;
+	border-radius: 5px;
+	margin-top: 10px;
+	text-align: center;
+	outline: 0;
+	border: none;
+	color: white;
+	font-family: Montserrat;
+	background: red;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.pickWorktimeButton {
 	height: 30px;
 	border-radius: 5px;
 	margin-top: 10px;

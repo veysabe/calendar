@@ -13,6 +13,7 @@
 		<div class="admin-buttons">
 			<input type="button" class="pickWeekendButton" value="Выбрать выходные">
 			<input type="button" class="pickGapButton" value="Выбрать интервал">
+			<input type="button" class="pickWorktimeButton" value="Выбрать время работы">
 		</div>
 	</div>
 
@@ -20,6 +21,28 @@
 		<div class="gap-choise-cont">
 			<input type="button" class="gapChoiseButton" value="1 час" data="1hour">
 			<input type="button" class="gapChoiseButton" value="30 минут" data="halfhour">
+		</div>
+	</div>
+
+	<div class="worktime-choise-out">
+		<div class="worktime-choise-cont">
+			<div class="worktime-choise-cont__open-time">
+				<select class="worktime-choise-cont__time-h" select-type="hour">
+
+				</select>
+				<select class="worktime-choise-cont__time-m" select-type="minutes">
+					
+				</select>
+			</div>
+			<span>-</span>
+			<div class="worktime-choise-cont__close-time">
+				<select class="worktime-choise-cont__time-h" select-type="hour">
+					
+				</select>
+				<select class="worktime-choise-cont__time-m" select-type="minutes">
+					
+				</select>
+			</div>
 		</div>
 	</div>
 
@@ -42,14 +65,6 @@
 				<div><div id="calendar__next"></div></div>
 			</div>
 		</div>
-	</div>
-
-	<div class="choose-time__time-element">
-		<div class="choose-time__element-date">
-			<span class="choose-time__element-date-day">5</span>
-			<span class="choose-time__element-date-month">Декабрь</span>
-		</div>
-		<span class="choose-time__element-time">7:30</span>
 	</div>
 
 	<script src="js/jquery-3.4.1.min.js"></script>

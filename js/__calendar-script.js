@@ -119,12 +119,44 @@ $('body').on('click', '.choose-time__time-element', function() {
 
 })
 
+$('body').on('click', '.pickWorktimeButton', function(){ // открыть окно с интервалом
+	$(".worktime-choise-out").css("display", "flex");
+	setTimeout(function(){
+		$(".worktime-choise-out").addClass("shown");
+	},100);
+	for (let i = 0; i <= 24; i++) {
+		if (i<10) {
+			i = '0' + i;
+		}
+		$('.worktime-choise-cont__time-h').append(`<option>${i}</option>`);
+	}
+	let k;
+	for (let i = 0; i < 6; i++) {
+		if (i<1) {
+			k = '0' + i;
+		} else {
+			k = i + "0";
+		}
+		$('.worktime-choise-cont__time-m').append(`<option>${k}</option>`);
+	}
+});
+
+$(document).mouseup(function (e){ // скрыть модальное окно интервала
+	let worktimeChoise = $(".worktime-choise-cont"); 
+	let worktimeChoiseOut = $(".worktime-choise-out");
+	if (!worktimeChoise.is(e.target) // если клик был не по нашему блоку
+	    && worktimeChoise.has(e.target).length === 0) { // и не по его дочерним элементам
+			worktimeChoiseOut.removeClass("shown");
+			worktimeChoiseOut.removeAttr("style");
+	}
+});
+
 let openTime = 9;
 let closeTime = 22;
 
 function showTime(date) {
 	if ( gap == undefined ) { 
-		alert('net') 
+		alert('Не задан интервал') 
 	} else {
 		$('.choose-time-out').css('display', 'flex');
 		setTimeout(function(){
@@ -138,12 +170,21 @@ function showTime(date) {
 		$('.choose-time-slider').attr('data-month', dataMonth).attr('data-day', dataDay);
 		console.log(dataDay);
 		while ( i <= closeTime ) {
+			let modifiedIOP = '' + i;
+			let modifiedI;
+			if ( modifiedIOP.indexOf('.') == -1 ) {
+				modifiedI = modifiedIOP + ":00";
+			} else {
+				if ( modifiedIOP.lastIndexOf('5') != -1 ) modifiedI = modifiedIOP.slice(0,-2) + ":30";
+				// if ( modifiedIOP.slice(0,-1) )
+			}
+			console.log(modifiedI);
 			let divInner = `
 				<div class="choose-time__element-date">
 					<span class="choose-time__element-date-day">${dataDay}</span>
 					<span class="choose-time__element-date-month">${monthName}</span>
 				</div>
-				<span class="choose-time__element-time">${i}</span>
+				<span class="choose-time__element-time">${modifiedI}</span>
 			`;
 			let html = `<div class="choose-time__time-element" data-time="${i}">${divInner}</div>`;
 			$('.choose-time-container').append(html);
