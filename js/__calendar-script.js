@@ -189,6 +189,7 @@ $("body").on('click', '.pickWeekendButton-accept', function(){ // Создани
 		weekendObj[weekendMonthNum] = weekendDays;
 		weekendDays = [];
 	});
+	$('.dateCell.toggled').removeClass('toggled').addClass('inactive');
 	console.log(weekendObj);
 });
 
