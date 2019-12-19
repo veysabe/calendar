@@ -62,7 +62,8 @@ $("body").on('click', '.pickWeekendButton-accept', function(){ // Создани
 		$(this).find(".dateCell.toggled").each(function(){
 			weekendDays.push( $(this).text() );
 		})
-		weekendObj[weekendMonthNum] = weekendDays;
+		getMonthName(+weekendMonthNum);
+		weekendObj[monthName] = weekendDays;
 		weekendDays = [];
 	});
 	console.log(weekendObj);
