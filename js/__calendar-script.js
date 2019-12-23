@@ -16,6 +16,10 @@ let month;
 
 let gap;
 
+let openTime;
+
+let closeTime;
+
 function createCalendar(elem, year, month, user) { // функция создания календаря
 	let mon = month - 1;
 	let d = new Date(year, mon);
@@ -141,20 +145,37 @@ $('body').on('click', '.pickWorktimeButton', function(){ // открыть ок�
 	}
 });
 
-$(document).mouseup(function (e){ // скрыть модальное окно интервала
+$('body').on('click', '.pickWorktimeButton-accept', function() { // задать время открытия и время открытия
+	let openHour = $(".worktime-choise-cont__open-time").find('.worktime-choise-cont__time-h').val();
+	let openMinute = $(".worktime-choise-cont__open-time").find('.worktime-choise-cont__time-m').val();
+	let closeHour = $(".worktime-choise-cont__close-time").find('.worktime-choise-cont__time-h').val();
+	let closeMinute = $(".worktime-choise-cont__close-time").find('.worktime-choise-cont__time-m').val();
+	openTime = openHour + openMinute;
+	closeTime = closeHour + closeMinute;
+	let visual = `Время работы: c ${openHour}:${openMinute} по ${closeHour}:${closeMinute}`;
+	$(".admin-params-visual__worktime").find('span').empty().append(visual);
+	openTime = Number(+openHour + +(+openMinute/60).toFixed(1));
+	closeTime = Number(+closeHour + +(+closeMinute/60).toFixed(1));
+	let allDayText = "<span style='font-weight: bold; margin-left: 5px; '>(Круглосуточно)</span>"
+	if (openTime == closeTime) {
+		$(".admin-params-visual__worktime").find('span').append(allDayText);
+	}
+	console.log(openTime, closeTime);
+});
+
+$(document).mouseup(function (e){ // скрыть модальное окно выбора времени работы
 	let worktimeChoise = $(".worktime-choise-cont"); 
 	let worktimeChoiseOut = $(".worktime-choise-out");
 	if (!worktimeChoise.is(e.target) // если клик был не по нашему блоку
 	    && worktimeChoise.has(e.target).length === 0) { // и не по его дочерним элементам
 			worktimeChoiseOut.removeClass("shown");
 			worktimeChoiseOut.removeAttr("style");
+			$(".worktime-choise-cont__time-h").find('option').remove();
+			$(".worktime-choise-cont__time-m").find('option').remove();
 	}
 });
 
-let openTime = 9;
-let closeTime = 22;
-
-function showTime(date) {
+function showTime(date) { // Создание модального окна с выбором времени для записи
 	if ( gap == undefined ) { 
 		alert('Не задан интервал') 
 	} else {
@@ -228,7 +249,7 @@ $(".pickMonthButton").click(function() { // создание календаря 
 	createCalendar(calendar__next, nextYear, nextMonth, "user");
 });
 
-$('body').on('click', '.calendar-cont-close', function(){
+$('body').on('click', '.calendar-cont-close', function(){ // нажать на крестик для закрытия календаря
 	let calendar = $(".calendar-cont"); 
 	let calendarOut = $(".calendar-out");
 	calendarOut.removeClass("shown");
@@ -239,7 +260,7 @@ $('body').on('click', '.calendar-cont-close', function(){
 
 let adminWeekendButton = '<input type="button" class="pickWeekendButton-accept" value="Выбрать выходные">';
 
-$(".pickWeekendButton").click(function(){ // создание календаря при нажатии на кнопку (user)
+$(".pickWeekendButton").click(function(){ // создание календаря при нажатии на кнопку (admin)
 	$(".calendar-out").css("display", "flex");
 	$(".calendar-cont").addClass("admin");
 	setTimeout(function(){
@@ -325,7 +346,9 @@ $(document).mouseup(function (e){ // скрыть модальное окно в
 $('body').on('click', '.gapChoiseButton', function() { // задать интервал
 	if ( $(this).attr('data') == '1hour' ) {
 		gap = 1;
+		$('.admin-params-visual__gap').find('span').empty().append("Интервал: 1 час");
 	} else if ( $(this).attr('data') == 'halfhour' ) {
 		gap = 0.5;
+		$('.admin-params-visual__gap').find('span').empty().append("Интервал: 30 мин.");
 	}
 });

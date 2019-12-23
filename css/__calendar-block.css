@@ -253,6 +253,10 @@ td:nth-child(6), td:nth-child(7), th:nth-child(6), th:nth-child(7) {
 	flex-direction: column;
 }
 
+.admin-params-content {
+	display: flex;
+}
+
 .buttons {
 	display: flex;
 }
@@ -324,6 +328,7 @@ td:nth-child(6), td:nth-child(7), th:nth-child(6), th:nth-child(7) {
 }
 
 .pickWorktimeButton {
+	width: 200px;
 	height: 30px;
 	border-radius: 5px;
 	margin-top: 10px;
