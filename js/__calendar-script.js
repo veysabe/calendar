@@ -2,6 +2,9 @@ $(document).ready(function(){
 	$(".calendar-slider").slick({
 		infinite: false
 	});
+	$(".choose-time-slider").slick({
+		infinite: false
+	});
 })
 
 let curDate = new Date();
@@ -14,11 +17,11 @@ let curMonth;
 
 let month;
 
-let gap;
+let gap = 1;
 
-let openTime;
+let openTime = 10;
 
-let closeTime;
+let closeTime = 20;
 
 function createCalendar(elem, year, month, user) { // функция создания календаря
 	let mon = month - 1;
@@ -154,13 +157,13 @@ $('body').on('click', '.pickWorktimeButton-accept', function() { // задать
 	closeTime = closeHour + closeMinute;
 	let visual = `Время работы: c ${openHour}:${openMinute} по ${closeHour}:${closeMinute}`;
 	$(".admin-params-visual__worktime").find('span').empty().append(visual);
+	if (+closeHour == 0) closeHour = 24;
 	openTime = Number(+openHour + +(+openMinute/60).toFixed(1));
 	closeTime = Number(+closeHour + +(+closeMinute/60).toFixed(1));
-	let allDayText = "<span style='font-weight: bold; margin-left: 5px; '>(Круглосуточно)</span>"
+	let allDayText = "<span style='font-weight: bold; margin-left: 5px; '>(Круглосуточно)</span>";
 	if (openTime == closeTime) {
 		$(".admin-params-visual__worktime").find('span').append(allDayText);
 	}
-	console.log(openTime, closeTime);
 });
 
 $(document).mouseup(function (e){ // скрыть модальное окно выбора времени работы
@@ -179,6 +182,7 @@ function showTime(date) { // Создание модального окна с �
 	if ( gap == undefined ) { 
 		alert('Не задан интервал') 
 	} else {
+		$(".choose-time-slider").slick('refresh');
 		$('.choose-time-out').css('display', 'flex');
 		setTimeout(function(){
 			$('.choose-time-out').addClass('show-time');
@@ -186,19 +190,31 @@ function showTime(date) { // Создание модального окна с �
 		let i = openTime;
 		let dataDay = $(date).text();
 		let dataMonth = $(date).parents('.slick-slide').attr('data-month');
+		let containerNumber = 1;
+		let elementsOnSlide = 0;
+		let maxElementsOnSlide = 16;
+		let containerHTML = `
+							<div>
+								<div class="choose-time-container" container-number="${containerNumber}">
+								</div>
+							</div>
+							`;
 		getMonthName(+dataMonth);
-		console.log(monthName);
+		$('.choose-time-slider').empty();
 		$('.choose-time-slider').attr('data-month', dataMonth).attr('data-day', dataDay);
-		console.log(dataDay);
+		if ($("div").is('choose-time-container') == false) { $('.choose-time-slider').append(containerHTML) }
 		while ( i <= closeTime ) {
 			let modifiedIOP = '' + i;
 			let modifiedI;
 			if ( modifiedIOP.indexOf('.') == -1 ) {
 				modifiedI = modifiedIOP + ":00";
 			} else {
+				if ( modifiedIOP.lastIndexOf('2') != -1 ) modifiedI = modifiedIOP.slice(0,-2) + ":10";
+				if ( modifiedIOP.lastIndexOf('3') != -1 ) modifiedI = modifiedIOP.slice(0,-2) + ":20";
 				if ( modifiedIOP.lastIndexOf('5') != -1 ) modifiedI = modifiedIOP.slice(0,-2) + ":30";
+				if ( modifiedIOP.lastIndexOf('7') != -1 ) modifiedI = modifiedIOP.slice(0,-2) + ":40";
+				if ( modifiedIOP.lastIndexOf('8') != -1 ) modifiedI = modifiedIOP.slice(0,-2) + ":50";
 			}
-			console.log(modifiedI);
 			let divInner = `
 				<div class="choose-time__element-date">
 					<span class="choose-time__element-date-day">${dataDay}</span>
@@ -207,10 +223,23 @@ function showTime(date) { // Создание модального окна с �
 				<span class="choose-time__element-time">${modifiedI}</span>
 			`;
 			let html = `<div class="choose-time__time-element" data-time="${i}">${divInner}</div>`;
-			$('.choose-time-container').append(html);
+			$(`.choose-time-container[container-number="${containerNumber}"]`).append(html);
+			elementsOnSlide++;
 			i += gap;
+			if (elementsOnSlide == maxElementsOnSlide) {
+				containerNumber++;
+				containerHTML = `
+								<div>
+									<div class="choose-time-container" container-number="${containerNumber}">
+									</div>
+								</div>
+								`;
+				$('.choose-time-slider').append(containerHTML);
+				elementsOnSlide = 0;
+			}
 		}
-	}	
+		$(".choose-time-slider").slick('refresh');
+	}
 }
 
 function deactivatedDates() { // выделить неактивные даты
@@ -304,7 +333,6 @@ $("body").on('click', '.pickWeekendButton-accept', function(){ // Создани
 		weekendDays = [];
 	});
 	$('.dateCell.toggled').removeClass('toggled').addClass('inactive');
-	console.log(weekendObj);
 });
 
 $('body').on('click', '.dateCell.user', function(){ // открыть окно с выбором времени по нажатии на кнопку
@@ -340,6 +368,7 @@ $(document).mouseup(function (e){ // скрыть модальное окно в
 			chooseTimeOut.removeClass("show-time");
 			chooseTimeOut.removeAttr("style");
 			$('div.choose-time__time-element').remove();
+			$('.choose-time-slider').empty();
 	}
 });
 
