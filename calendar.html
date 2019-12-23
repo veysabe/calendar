@@ -26,22 +26,30 @@
 
 	<div class="worktime-choise-out">
 		<div class="worktime-choise-cont">
-			<div class="worktime-choise-cont__open-time">
-				<select class="worktime-choise-cont__time-h" select-type="hour">
+			<div class="worktime-choise-cont__text">Выберите время работы</div>
+			<div class="worktime-choise-cont__selects">
+				<div class="worktime-choise-cont__open-time">
+					<select class="worktime-choise-cont__time-h" select-type="hour">
 
-				</select>
-				<select class="worktime-choise-cont__time-m" select-type="minutes">
-					
-				</select>
+					</select>
+					<span>:</span>
+					<select class="worktime-choise-cont__time-m" select-type="minutes">
+						
+					</select>
+				</div>
+				<span>-</span>
+				<div class="worktime-choise-cont__close-time">
+					<select class="worktime-choise-cont__time-h" select-type="hour">
+						
+					</select>
+					<span>:</span>
+					<select class="worktime-choise-cont__time-m" select-type="minutes">
+						
+					</select>
+				</div>
 			</div>
-			<span>-</span>
-			<div class="worktime-choise-cont__close-time">
-				<select class="worktime-choise-cont__time-h" select-type="hour">
-					
-				</select>
-				<select class="worktime-choise-cont__time-m" select-type="minutes">
-					
-				</select>
+			<div>
+				<input type="button" class="pickWorktimeButton-accept" value="Выбрать время работы">
 			</div>
 		</div>
 	</div>

@@ -124,7 +124,7 @@ $('body').on('click', '.pickWorktimeButton', function(){ // открыть ок�
 	setTimeout(function(){
 		$(".worktime-choise-out").addClass("shown");
 	},100);
-	for (let i = 0; i <= 24; i++) {
+	for (let i = 0; i < 24; i++) {
 		if (i<10) {
 			i = '0' + i;
 		}
@@ -176,7 +176,6 @@ function showTime(date) {
 				modifiedI = modifiedIOP + ":00";
 			} else {
 				if ( modifiedIOP.lastIndexOf('5') != -1 ) modifiedI = modifiedIOP.slice(0,-2) + ":30";
-				// if ( modifiedIOP.slice(0,-1) )
 			}
 			console.log(modifiedI);
 			let divInner = `

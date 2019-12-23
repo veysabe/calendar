@@ -150,10 +150,18 @@
 	margin: 0px auto;
 	padding: 20px;
 	border-radius: 5px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	font-family: Montserrat;
+	align-items: center;
+}
+
+.worktime-choise-cont__selects {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	position: relative;
 }
 
 .show-time {
@@ -240,6 +248,15 @@ td:nth-child(6), td:nth-child(7), th:nth-child(6), th:nth-child(7) {
 	color: red;
 }
 
+.admin-buttons {
+	display: flex;
+	flex-direction: column;
+}
+
+.buttons {
+	display: flex;
+}
+
 .pickMonthButton {
 	width: 140px;
 	height: 30px;
@@ -268,11 +285,6 @@ td:nth-child(6), td:nth-child(7), th:nth-child(6), th:nth-child(7) {
 	background: green;
 	font-weight: bold;
 	cursor: pointer;
-}
-
-.toggled {
-	background: blue !important;
-	color: white !important;
 }
 
 .pickWeekendButton-accept {
@@ -305,6 +317,12 @@ td:nth-child(6), td:nth-child(7), th:nth-child(6), th:nth-child(7) {
 	cursor: pointer;
 }
 
+.gapChoiseButton {
+	width: 40%;
+	height: 40%;
+	margin: 10px;
+}
+
 .pickWorktimeButton {
 	height: 30px;
 	border-radius: 5px;
@@ -319,19 +337,23 @@ td:nth-child(6), td:nth-child(7), th:nth-child(6), th:nth-child(7) {
 	cursor: pointer;
 }
 
-.gapChoiseButton {
-	width: 40%;
-	height: 40%;
-	margin: 10px;
+.pickWorktimeButton-accept {
+	height: 30px;
+	border-radius: 5px;
+	margin-top: 10px;
+	text-align: center;
+	outline: 0;
+	border: none;
+	color: white;
+	font-family: Montserrat;
+	background: green;
+	font-weight: bold;
+	cursor: pointer;
 }
 
-.buttons {
-	display: flex;
-}
-
-.admin-buttons {
-	display: flex;
-	flex-direction: column;
+.toggled {
+	background: blue !important;
+	color: white !important;
 }
 
 .user .inactive {
@@ -343,4 +365,37 @@ td:nth-child(6), td:nth-child(7), th:nth-child(6), th:nth-child(7) {
 .admin .inactive {
 	background: green;
 	color: white;
+}
+
+.worktime-choise-cont__time-h, .worktime-choise-cont__time-m {
+	width: 100px;
+	height: 50px;
+	font-size: 16px;
+	border: 2px solid rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
+	font-weight: bold;
+}
+
+.worktime-choise-cont__open-time {
+	margin-right: 15px;
+}
+
+.worktime-choise-cont__close-time {
+	margin-left: 15px;
+}
+
+.worktime-choise-cont span {
+	font-size: 30px;
+	font-weight: bold;
+}
+
+.worktime-choise-cont option {
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.worktime-choise-cont__text {
+	text-align: center;
+	font-weight: bold;
+	font-size: 30px;
 }
