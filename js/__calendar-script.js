@@ -149,19 +149,23 @@ $('body').on('click', '.pickWorktimeButton', function(){ // открыть ок�
 });
 
 $('body').on('click', '.pickWorktimeButton-accept', function() { // задать время открытия и время открытия
-	let openHour = $(".worktime-choise-cont__open-time").find('.worktime-choise-cont__time-h').val();
-	let openMinute = $(".worktime-choise-cont__open-time").find('.worktime-choise-cont__time-m').val();
-	let closeHour = $(".worktime-choise-cont__close-time").find('.worktime-choise-cont__time-h').val();
-	let closeMinute = $(".worktime-choise-cont__close-time").find('.worktime-choise-cont__time-m').val();
+	let openTimeParent = $(".worktime-choise-cont__open-time");
+	let closeTimeParent = $('.worktime-choise-cont__close-time');
+	let timeMinute = $('.worktime-choise-cont__time-m');
+	let timeHour = $('.worktime-choise-cont__time-h');
+	let openHour = openTimeParent.find(timeHour).val();
+	let openMinute = openTimeParent.find(timeMinute).val();
+	let closeHour = closeTimeParent.find(timeHour).val();
+	let closeMinute = closeTimeParent.find(timeMinute).val();
 	openTime = openHour + openMinute;
 	closeTime = closeHour + closeMinute;
 	let visual = `Время работы: c ${openHour}:${openMinute} по ${closeHour}:${closeMinute}`;
 	$(".admin-params-visual__worktime").find('span').empty().append(visual);
-	if (+closeHour == 0) closeHour = 24;
+	if (+closeHour === 0) closeHour = 24;
 	openTime = Number(+openHour + +(+openMinute/60).toFixed(1));
 	closeTime = Number(+closeHour + +(+closeMinute/60).toFixed(1));
 	let allDayText = "<span style='font-weight: bold; margin-left: 5px; '>(Круглосуточно)</span>";
-	if (openTime == closeTime) {
+	if (openTime === closeTime) {
 		$(".admin-params-visual__worktime").find('span').append(allDayText);
 	}
 });
@@ -202,18 +206,18 @@ function showTime(date) { // Создание модального окна с �
 		getMonthName(+dataMonth);
 		$('.choose-time-slider').empty();
 		$('.choose-time-slider').attr('data-month', dataMonth).attr('data-day', dataDay);
-		if ($("div").is('choose-time-container') == false) { $('.choose-time-slider').append(containerHTML) }
+		if ($("div").is('choose-time-container') === false) { $('.choose-time-slider').append(containerHTML) }
 		while ( i <= closeTime ) {
 			let modifiedIOP = '' + i;
 			let modifiedI;
-			if ( modifiedIOP.indexOf('.') == -1 ) {
+			if ( modifiedIOP.indexOf('.') === -1 ) {
 				modifiedI = modifiedIOP + ":00";
 			} else {
-				if ( modifiedIOP.lastIndexOf('2') != -1 ) modifiedI = modifiedIOP.slice(0,-2) + ":10";
-				if ( modifiedIOP.lastIndexOf('3') != -1 ) modifiedI = modifiedIOP.slice(0,-2) + ":20";
-				if ( modifiedIOP.lastIndexOf('5') != -1 ) modifiedI = modifiedIOP.slice(0,-2) + ":30";
-				if ( modifiedIOP.lastIndexOf('7') != -1 ) modifiedI = modifiedIOP.slice(0,-2) + ":40";
-				if ( modifiedIOP.lastIndexOf('8') != -1 ) modifiedI = modifiedIOP.slice(0,-2) + ":50";
+				if ( modifiedIOP.lastIndexOf('2') !== -1 ) modifiedI = modifiedIOP.slice(0,-2) + ":10";
+				if ( modifiedIOP.lastIndexOf('3') !== -1 ) modifiedI = modifiedIOP.slice(0,-2) + ":20";
+				if ( modifiedIOP.lastIndexOf('5') !== -1 ) modifiedI = modifiedIOP.slice(0,-2) + ":30";
+				if ( modifiedIOP.lastIndexOf('7') !== -1 ) modifiedI = modifiedIOP.slice(0,-2) + ":40";
+				if ( modifiedIOP.lastIndexOf('8') !== -1 ) modifiedI = modifiedIOP.slice(0,-2) + ":50";
 			}
 			let divInner = `
 				<div class="choose-time__element-date">
@@ -226,7 +230,7 @@ function showTime(date) { // Создание модального окна с �
 			$(`.choose-time-container[container-number="${containerNumber}"]`).append(html);
 			elementsOnSlide++;
 			i += gap;
-			if (elementsOnSlide == maxElementsOnSlide) {
+			if (elementsOnSlide === maxElementsOnSlide) {
 				containerNumber++;
 				containerHTML = `
 								<div>
