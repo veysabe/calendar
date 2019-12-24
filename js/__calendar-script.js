@@ -19,9 +19,9 @@ let month;
 
 let gap = 1;
 
-let openTime = 10;
+let openTime = 8;
 
-let closeTime = 20;
+let closeTime = 24;
 
 function createCalendar(elem, year, month, user) { // функция создания календаря
 	let mon = month - 1;
@@ -123,7 +123,7 @@ function getMonthName(month) {
 };
 
 $('body').on('click', '.choose-time__time-element', function() {
-
+	alert('sho nado')
 })
 
 $('body').on('click', '.pickWorktimeButton', function(){ // открыть окно с интервалом
@@ -165,9 +165,11 @@ $('body').on('click', '.pickWorktimeButton-accept', function() { // задать
 	openTime = Number(+openHour + +(+openMinute/60).toFixed(1));
 	closeTime = Number(+closeHour + +(+closeMinute/60).toFixed(1));
 	let allDayText = "<span style='font-weight: bold; margin-left: 5px; '>(Круглосуточно)</span>";
-	if (openTime === closeTime) {
+	if (openTime === closeTime || (openTime === 0 && closeTime === 24)) {
 		$(".admin-params-visual__worktime").find('span').append(allDayText);
 	}
+	hideModalWindow($('.worktime-choise-out'));
+	console.log(openTime, closeTime);
 });
 
 $(document).mouseup(function (e){ // скрыть модальное окно выбора времени работы
@@ -186,7 +188,7 @@ function showTime(date) { // Создание модального окна с �
 	if ( gap == undefined ) { 
 		alert('Не задан интервал') 
 	} else {
-		$(".choose-time-slider").slick('refresh');
+		$(".choose-time-slider").slick('destroy');
 		$('.choose-time-out').css('display', 'flex');
 		setTimeout(function(){
 			$('.choose-time-out').addClass('show-time');
@@ -204,9 +206,8 @@ function showTime(date) { // Создание модального окна с �
 							</div>
 							`;
 		getMonthName(+dataMonth);
-		$('.choose-time-slider').empty();
 		$('.choose-time-slider').attr('data-month', dataMonth).attr('data-day', dataDay);
-		if ($("div").is('choose-time-container') === false) { $('.choose-time-slider').append(containerHTML) }
+		$('.choose-time-slider').html(containerHTML);
 		while ( i <= closeTime ) {
 			let modifiedIOP = '' + i;
 			let modifiedI;
@@ -230,7 +231,7 @@ function showTime(date) { // Создание модального окна с �
 			$(`.choose-time-container[container-number="${containerNumber}"]`).append(html);
 			elementsOnSlide++;
 			i += gap;
-			if (elementsOnSlide === maxElementsOnSlide) {
+			if (elementsOnSlide == maxElementsOnSlide) {
 				containerNumber++;
 				containerHTML = `
 								<div>
@@ -242,6 +243,8 @@ function showTime(date) { // Создание модального окна с �
 				elementsOnSlide = 0;
 			}
 		}
+
+		$(".choose-time-slider").slick('init');		
 		$(".choose-time-slider").slick('refresh');
 	}
 }
@@ -354,13 +357,18 @@ $('body').on('click', '.pickGapButton', function(){ // открыть окно �
 	},100);
 });
 
+function hideModalWindow(outerSpace) {
+	console.log('Rabotaet')
+	$(outerSpace).removeClass("shown");
+	$(outerSpace).removeAttr("style");
+}
+
 $(document).mouseup(function (e){ // скрыть модальное окно интервала
 	let gapChoise = $(".gap-choise-cont"); 
 	let gapChoiseOut = $(".gap-choise-out");
 	if (!gapChoise.is(e.target) // если клик был не по нашему блоку
 	    && gapChoise.has(e.target).length === 0) { // и не по его дочерним элементам
-			gapChoiseOut.removeClass("shown");
-			gapChoiseOut.removeAttr("style");
+			hideModalWindow(gapChoiseOut);
 	}
 });
 
@@ -373,6 +381,7 @@ $(document).mouseup(function (e){ // скрыть модальное окно в
 			chooseTimeOut.removeAttr("style");
 			$('div.choose-time__time-element').remove();
 			$('.choose-time-slider').empty();
+			$(".choose-time-slider").slick('refresh');
 	}
 });
 
@@ -384,4 +393,5 @@ $('body').on('click', '.gapChoiseButton', function() { // задать инте�
 		gap = 0.5;
 		$('.admin-params-visual__gap').find('span').empty().append("Интервал: 30 мин.");
 	}
+	hideModalWindow($('.gap-choise-out'));
 });
